@@ -12,18 +12,6 @@ export default {
   name: 'app',
   components: {
     HelloWorld
-  },
-  beforeCreate(){
-    console.log(1);
-  },
-  created(){
-    console.log(2);
-  },
-  beforeMount(){
-    console.log(3);
-  },
-  mounted(){
-    console.log(4);
   }
 }
 </script>
