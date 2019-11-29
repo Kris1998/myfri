@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'v-footer',
+  name: 'navFooter',
   props: {
   }
 }
