@@ -18,28 +18,28 @@
         </div>
         
         <ul class="cart-item">
-          <li>
+          <li v-for="item in cartList" v-bind:key="item.productId">
             <div class="cart-tab-1">
               <div class="cart-item-check">
                 <a href="/">check</a>
               </div>
               <div class="cart-item-title">
-                小度人工智能音箱
+                {{item.productName}}
               </div>
             </div>
             <div class="cart-tab-2">
               <div class="item-price">
-                89
+                {{item.productPrice}}
               </div>
             </div>
             <div class="cart-tab-3">
               <div class="item-quantity">
-                <span>1</span>
+                <span>{{item.productNum}}</span>
               </div>
             </div>
             <div class="cart-tab-4">
               <div class="item-total-price">
-                ￥89元
+                ￥{{item.productPrice*item.productNum}}元
               </div>
             </div>
             <div class="cart-tab-5">
@@ -62,13 +62,29 @@ import breadcrumb from '../components/Breadcrumb.vue'
 
 export default {
   name: 'cart',
+  data(){
+    return{
+      cartList:[]
+    }
+  },
   props: {
   },
   components: {
     navFooter,
     navHeader,
     breadcrumb
-  }
+  },
+  mounted(){
+    this.init();
+  },
+  methods:{
+    init(){
+      this.axios.get("/mock/cart.json").then((response)=>{
+        this.cartList = response.data.data;
+        console.log(this.cartList);
+      })
+    }
+  },
 }
 </script>
 
@@ -82,6 +98,7 @@ export default {
 .content-header{
 	padding-top: 20px;
 	letter-spacing: 1em;
+  display: flex;
 }
 
 .cart{
