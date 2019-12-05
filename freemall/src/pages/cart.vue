@@ -21,7 +21,7 @@
           <li v-for="item in cartList" v-bind:key="item.productId">
             <div class="cart-tab-1">
               <div class="cart-item-check">
-                <a href="/">check</a>
+                <a href="/"></a>
               </div>
               <div class="cart-item-title">
                 {{item.productName}}
@@ -34,7 +34,9 @@
             </div>
             <div class="cart-tab-3">
               <div class="item-quantity">
+                <a @click="minusCart(item)">-</a>
                 <span>{{item.productNum}}</span>
+                <a @click="addCart(item)">+</a>
               </div>
             </div>
             <div class="cart-tab-4">
@@ -48,7 +50,19 @@
               </div>
             </div>
           </li>
-        </ul>		
+        </ul>
+
+        <div class="cart-foot">
+          <div class="cart-foot-1">
+            <div class="cart-item-check">
+              <a href="/"></a>
+            </div>
+          </div>
+          <div class="cart-foot-2">2</div>
+          <div class="cart-foot-3">34</div>
+          <div class="cart-foot-4">5</div>
+          <div class="cart-foot-5">6</div>
+        </div>
       </div>
     </div>
     <nav-footer></nav-footer> 
@@ -83,6 +97,12 @@ export default {
         this.cartList = response.data.data;
         console.log(this.cartList);
       })
+    },
+    addCart(a){
+      a.productNum++;
+    },
+    minusCart(b){
+      b.productNum--;
     }
   },
 }
@@ -154,6 +174,12 @@ export default {
 	width: 40%
 }
 
+.cart-item-check{
+  height: 30px;
+  width: 30px;
+  background-color: pink;
+}
+
 .cart-tab-2{
 	display: table-cell;
 	border: 1px solid blue;
@@ -163,6 +189,22 @@ export default {
 	display: table-cell;
 	border: 1px solid blue;
 }
+
+.item-quantity{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-quantity a{
+  display: block;
+  text-decoration: none;
+  width: 30px;
+  height: 20px;
+  background-color: grey;
+  cursor: pointer;
+}
+
 
 .cart-tab-4{
 	display: table-cell;
@@ -181,5 +223,32 @@ export default {
 .item-price{
 	height: 100px;
 	line-height: 100px;
+}
+
+.cart-foot{
+  display: table-footer-group;
+  height: 100px; 
+  text-align: left;
+}
+
+.cart-foot-1{
+  display: table-cell;
+  height: 40px;
+}
+
+.cart-foot-2{
+  display: table-cell;
+}
+
+.cart-foot-3{
+  display: table-cell;
+}
+
+.cart-foot-4{
+  display: table-cell;
+}
+
+.cart-foot-5{
+  display: table-cell;
 }
 </style>
