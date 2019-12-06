@@ -20,8 +20,8 @@
         <ul class="cart-item">
           <li v-for="item in cartList" v-bind:key="item.productId">
             <div class="cart-tab-1">
-              <div class="cart-item-check">
-                <a href="/"></a>
+              <div class="cart-item-check" v-bind:class="{checked: item.checked}">
+                <a @click="check(item)"></a>
               </div>
               <div class="cart-item-title">
                 {{item.productName}}
@@ -41,7 +41,7 @@
             </div>
             <div class="cart-tab-4">
               <div class="item-total-price">
-                ￥{{item.productPrice*item.productNum}}元
+                {{(item.productPrice*item.productNum) | currency }}
               </div>
             </div>
             <div class="cart-tab-5">
@@ -55,13 +55,13 @@
         <div class="cart-foot">
           <div class="cart-foot-1">
             <div class="cart-item-check">
-              <a href="/"></a>
             </div>
+            <a href="/">Choose all</a>
           </div>
-          <div class="cart-foot-2">2</div>
-          <div class="cart-foot-3">34</div>
-          <div class="cart-foot-4">5</div>
-          <div class="cart-foot-5">6</div>
+          <div class="cart-foot-2"></div>
+          <div class="cart-foot-3"></div>
+          <div class="cart-foot-4">Sum：{{totalPrice | currency}}</div>
+          <div class="cart-foot-5"><a href="/">Summit</a></div>
         </div>
       </div>
     </div>
@@ -78,7 +78,8 @@ export default {
   name: 'cart',
   data(){
     return{
-      cartList:[]
+      cartList:[],
+      totalPrice: 0
     }
   },
   props: {
@@ -90,6 +91,9 @@ export default {
   },
   mounted(){
     this.init();
+  },
+  beforeUpdate(){
+    this.calculateTotalPrice();
   },
   methods:{
     init(){
@@ -103,8 +107,27 @@ export default {
     },
     minusCart(b){
       b.productNum--;
+    },
+    check(c){
+      c.checked = !c.checked;
+    },
+    calculateTotalPrice(){
+      this.totalPrice = 0;
+      for (let index = 0; index < this.cartList.length; index++) {
+        if (this.cartList[index].checked == true) {
+          this.totalPrice += this.cartList[index].productNum * this.cartList[index].productPrice;
+        }   
+      }
     }
   },
+  filters: {
+    currency: function(value){
+      if (!value) {
+        return 0.00;
+      }
+      return '$' + value.toFixed(2);
+    }
+  }
 }
 </script>
 
@@ -177,6 +200,17 @@ export default {
 .cart-item-check{
   height: 30px;
   width: 30px;
+  background-color: grey;
+}
+
+.cart-item-check a{
+  display: block;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+.checked{
   background-color: pink;
 }
 
@@ -246,9 +280,11 @@ export default {
 
 .cart-foot-4{
   display: table-cell;
+  text-align: center;
 }
 
 .cart-foot-5{
   display: table-cell;
+  text-align: center;
 }
 </style>
