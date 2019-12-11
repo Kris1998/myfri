@@ -46,7 +46,7 @@
             </div>
             <div class="cart-tab-5">
               <div class="item-delete">
-                <a href="/">删除</a>
+                <a @click="openModal(item)">删除</a>
               </div>
             </div>
           </li>
@@ -66,6 +66,14 @@
       </div>
     </div>
     <nav-footer></nav-footer> 
+    <nav-modal v-show="showModal" width="500" @on-cancel="cancel" @on-delete="deleteItem(item)">
+      <template v-slot:header>
+        
+      </template>
+      <template v-slot:body>
+        确定要删除此条数据吗？
+      </template>
+    </nav-modal>
   </div>
 </template>
 
@@ -73,13 +81,16 @@
 import navFooter from '../components/Footer.vue'
 import navHeader from '../components/Header.vue'
 import breadcrumb from '../components/Breadcrumb.vue'
+import navModal from '../components/Modal.vue'
 
 export default {
   name: 'cart',
   data(){
     return{
       cartList:[],
-      totalPrice: 0
+      totalPrice: 0,
+      showModal: false,
+      delItem: {}
     }
   },
   props: {
@@ -87,7 +98,8 @@ export default {
   components: {
     navFooter,
     navHeader,
-    breadcrumb
+    breadcrumb,
+    navModal
   },
   mounted(){
     this.init();
@@ -118,6 +130,21 @@ export default {
           this.totalPrice += this.cartList[index].productNum * this.cartList[index].productPrice;
         }   
       }
+    },
+    openModal(item){
+      this.showModal = true;
+      this.delItem = item;
+    },
+    cancel(){
+      this.showModal = false;
+    },
+    deleteItem(){
+      for (let index = 0; index < this.cartList.length; index++) {
+        if (this.cartList[index].productId == this.delItem.productId) {
+          this.cartList.splice(index, 1);
+        }
+      }
+      this.showModal = false;
     }
   },
   filters: {
