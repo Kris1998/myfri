@@ -54,14 +54,14 @@
 
         <div class="cart-foot">
           <div class="cart-foot-1">
-            <div class="cart-item-check">
+            <div class="cart-item-check" :class="{checked: allIsChecked}">
             </div>
-            <a href="/">Choose all</a>
+            <a @click="toggleChooseAll">Choose all</a>
           </div>
           <div class="cart-foot-2"></div>
           <div class="cart-foot-3"></div>
           <div class="cart-foot-4">Sum：{{totalPrice | currency}}</div>
-          <div class="cart-foot-5"><a href="/">Summit</a></div>
+          <div class="cart-foot-5"><a v-show="anyIsChecked" @click="checkOut">Summit</a></div>
         </div>
       </div>
     </div>
@@ -88,12 +88,32 @@ export default {
   data(){
     return{
       cartList:[],
-      totalPrice: 0,
       showModal: false,
       delItem: {}
     }
   },
   props: {
+  },
+  computed:{
+    totalPrice(){
+      let price = 0;
+      this.cartList.forEach((index) => {
+        if (index.checked) {
+          price += index.productNum * index.productPrice;
+        }
+      })
+      return price;
+    },
+    allIsChecked(){
+      return this.cartList.every((item) => {
+         return item.checked;
+      })
+    },
+    anyIsChecked(){
+      return this.cartList.some((item) => {
+        return item.checked;
+      })
+    }
   },
   components: {
     navFooter,
@@ -103,9 +123,6 @@ export default {
   },
   mounted(){
     this.init();
-  },
-  beforeUpdate(){
-    this.calculateTotalPrice();
   },
   methods:{
     init(){
@@ -123,14 +140,6 @@ export default {
     check(c){
       c.checked = !c.checked;
     },
-    calculateTotalPrice(){
-      this.totalPrice = 0;
-      for (let index = 0; index < this.cartList.length; index++) {
-        if (this.cartList[index].checked == true) {
-          this.totalPrice += this.cartList[index].productNum * this.cartList[index].productPrice;
-        }   
-      }
-    },
     openModal(item){
       this.showModal = true;
       this.delItem = item;
@@ -145,6 +154,19 @@ export default {
         }
       }
       this.showModal = false;
+    },
+    toggleChooseAll(){
+      let flag = this.allIsChecked;
+      this.cartList.forEach((item) => {
+        item.checked = !flag;
+      })
+    },
+    checkOut(){
+      if (this.anyIsChecked) {
+        this.$router.push({
+          path:'/address'
+        })
+      }
     }
   },
   filters: {
