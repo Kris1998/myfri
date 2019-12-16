@@ -128,7 +128,6 @@ export default {
     init(){
       this.axios.get("/mock/cart.json").then((response)=>{
         this.cartList = response.data.data;
-        console.log(this.cartList);
       })
     },
     addCart(a){
