@@ -7,13 +7,13 @@
         <h2>配送地址</h2>
       </div>
       <ul class="content-table">
-        <li class="content-table-cell" v-for="(item,index) in addressFilter" :key="item.addressId" @click="chosen(index)" :class="{chosen: whetherChoose[index], notChosen: !whetherChoose[index]}">
+        <li class="content-table-cell" v-for="(item,index) in addressFilter" :key="item.addressId" @click="chosen(index)" :class="{chosen: index == chosenIndex, notChosen: index != chosenIndex}">
           <p>{{item.userName}}</p>
           <p>{{item.streetName}}</p>
-          <p>{{item.isDefault}}</p>
+          <p>{{item.tel}}</p>
           <div class="content-table-button">
-            <button class="setDefault">设为默认</button>
-            <div class="defaultAddress">默认地址</div>
+            <button class="setDefault" v-show="(!item.isDefault)&&(index == chosenIndex)" @click="setDefault(item)">设为默认</button>
+            <div class="defaultAddress" v-show="item.isDefault">默认地址</div>
             <button class="deleteButton" @click.stop="deleteItem(item)">删除</button>
           </div>
         </li>
@@ -40,8 +40,7 @@ export default {
       addressList: [],
       limitConst: 3,
       limit: 3,
-      chosenIndex: -1,
-      whetherChoose: []
+      chosenIndex: 1
     }
   },
   components: {
@@ -59,7 +58,7 @@ export default {
       }else{
         return "收起";
       }
-    }
+    },
   },
   mounted(){
     this.init();
@@ -69,12 +68,6 @@ export default {
       this.axios.get("/mock/address.json").then((response) => {
         this.addressList = response.data.data; 
       });
-      for (let index = 0; index < this.addressList.length; index++) {
-        this.whetherChoose[index] = false; 
-      }
-      console.log(this.addressList);
-      console.log(this.addressList.length);
-      console.log(this.whetherChoose);
     },
     fold(){
       if (this.limit == this.limitConst) {
@@ -84,13 +77,27 @@ export default {
       }
     },
     chosen(index){
-      this.whetherChoose[index] = !this.whetherChoose[index];
-      console.log(this.whetherChoose);
+      this.chosenIndex = index;
     },
     deleteItem(delItem){
       this.addressList.forEach((item, index) => {
         if (item.addressId == delItem.addressId) {
           this.addressList.splice(index, 1);
+          if (this.chosenIndex == index) {
+            this.chosenIndex = -1;
+          }else if (this.chosenIndex > index) {
+            this.chosenIndex--;
+          }
+        }
+      });
+    },
+    setDefault(defaultItem){
+      this.addressList.forEach((item) => {
+        if (item.isDefault == true) {
+          item.isDefault = false;
+        }
+        if(item.addressId == defaultItem.addressId){
+          item.isDefault = true;
         }
       });
     }
