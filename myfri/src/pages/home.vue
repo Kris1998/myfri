@@ -1,6 +1,5 @@
 <template>
 <div>
-    home
     <itemcontainer fatherComponent = 'home'></itemcontainer>
 </div>
 </template>
