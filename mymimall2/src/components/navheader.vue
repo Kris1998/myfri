@@ -15,7 +15,31 @@
                 </div>
             </div>
         </div>
-        <div class="topbar-2"></div>
+        <div class="topbar-2">
+            <div class="container">
+                <div class="topbar-2-logo">
+                    <a href="javascript:;"></a>
+                </div>
+                <div class="topbar-2-menu">
+                    <div class="menu-item">
+                        <span>小米手机</span>
+                        <div class="children"></div>
+                    </div>
+                    <div class="menu-item">
+                        <span>RedMi红米</span>
+                        <div class="children"></div>
+                    </div>
+                    <div class="menu-item">
+                        <span>电视</span>
+                        <div class="children"></div>
+                    </div>
+                </div>
+                <div class="topbar-2-search">
+                    <input type="text">
+                    <a href="javascript:;"></a>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -26,6 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../assets/scss/base.scss';
 .nav-header {
     .topbar-1 {
         height: 39px;
@@ -33,8 +58,6 @@ export default {
         background-color: #333;
         color: #B0B0B0;
         .container {
-            width: 1226px;
-            margin: auto auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -95,6 +118,36 @@ export default {
                     &:hover {
                         margin-left: -55px;
                     }
+                }
+            }
+            .topbar-2-menu {
+                .menu-item {
+                    display: inline-block;
+                    color: #333;
+                    font-weight: bold;
+                    font-family: FZLanTingHeiS-R-GB;
+                    font-size: 16px;
+                    margin-right: 20px;
+                    span {
+                        cursor: pointer;
+                    }
+                    &:hover {
+                        color: #F60;
+                    }
+                }
+            }
+            .topbar-2-search {
+                input {
+                    width: 264px;
+                    height: 50px;
+                    border: 1px solid rgba(224, 224, 224,1);
+                    padding-left: 14px;
+                }
+                a {
+                    display: inline-block;
+                    width: 55px;
+                    height: 50px;
+                    border: 1px solid rgba(224, 224, 224,1);
                 }
             }
         }
