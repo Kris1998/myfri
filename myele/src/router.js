@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import App from './App'
-import home from './pages/home'
 import mainpage from './pages/mainpage'
 import my from './pages/my'
 import order from './pages/order'
@@ -17,32 +16,22 @@ export default new Router({
             children: [
                 {
                     path: '',
-                    redirect: '/home/mainpage'
+                    redirect: '/mainpage'
                 },
                 {
-                    path: '/home',
-                    component: home,
-                    children: [
-                        {
-                            path: '',
-                            redirect: 'mainpage'
-                        },
-                        {
-                            path: 'mainpage',
-                            name: 'mainpage',
-                            component: mainpage
-                        },
-                        {
-                            path: 'order',
-                            name: 'order',
-                            component: order
-                        },
-                        {
-                            path: 'my',
-                            name: 'my',
-                            component: my
-                        }
-                    ]
+                    path: '/mainpage',
+                    name: 'mainpage',
+                    component: mainpage
+                },
+                {
+                    path: '/order',
+                    name: 'order',
+                    component: order
+                },
+                {
+                    path: '/my',
+                    name: 'my',
+                    component: my
                 },
                 {
                     path: '/login',

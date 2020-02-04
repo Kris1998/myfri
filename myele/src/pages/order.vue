@@ -1,12 +1,17 @@
 <template>
     <div>
         order
+        <nav-footer fatherComponent="order"></nav-footer>
     </div>
 </template>
 
 <script>
+import navFooter from '../components/navfooter'
 export default {
-    name: 'order'
+    name: 'order',
+    components: {
+        navFooter
+    }
 }
 </script>
 
