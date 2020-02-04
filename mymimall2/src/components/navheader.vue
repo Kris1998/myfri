@@ -60,5 +60,44 @@ export default {
             }
         }
     }
+    .topbar-2 {
+        .container {
+            height: 112px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .topbar-2-logo {
+                display: inline-block;
+                width: 55px;
+                height: 55px;
+                background-color: #F60;
+                a {
+                    display: inline-block;
+                    width: 110px;
+                    height: 55px;
+                    transition: margin-left .5s ease 0s;
+                    &:before {
+                        content: ' ';
+                        display: inline-block;
+                        width: 55px;
+                        height: 55px;
+                        background: url('/images/mi-logo.png');
+                        background-size: contain;
+                    }
+                    &:after {
+                        content: ' ';
+                        display: inline-block;
+                        width: 55px;
+                        height: 55px;
+                        background: url('/images/mi-home.png');
+                        background-size: contain;
+                    }
+                    &:hover {
+                        margin-left: -55px;
+                    }
+                }
+            }
+        }
+    }
 }
 </style>
