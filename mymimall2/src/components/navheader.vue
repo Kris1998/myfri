@@ -9,8 +9,9 @@
                     <a href="javascript:;">协议规则</a>
                 </div>
                 <div class="topbar-1-right">
-                    <a href="javascript:;">登录</a>
-                    <a href="javascript:;">注册</a>
+                    <a href="javascript:;" v-if="userName">{{ userName }}</a>
+                    <a href="javascript:;" v-else>登录</a>
+                    <a href="javascript:;">我的订单</a>
                     <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车</a>
                 </div>
             </div>
@@ -25,58 +26,13 @@
                         <span>小米手机</span>
                         <div class="children">
                             <ul>
-                                <li class="product">
+                                <li class="product" v-for="(item,index) in phoneList" :key=index>
                                     <a href="http://www.baidu.com">
                                         <div class="pro-img">
-                                            <img src="/images/nav-img/nav-1.png">
+                                            <img :src="item.mainImage">
                                         </div>
-                                        <div class="pro-name">小米9</div>
-                                        <div class="pro-price">2299元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="http://www.baidu.com">
-                                        <div class="pro-img">
-                                            <img src="/images/nav-img/nav-1.png">
-                                        </div>
-                                        <div class="pro-name">小米9</div>
-                                        <div class="pro-price">2299元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="http://www.baidu.com">
-                                        <div class="pro-img">
-                                            <img src="/images/nav-img/nav-1.png">
-                                        </div>
-                                        <div class="pro-name">小米9</div>
-                                        <div class="pro-price">2299元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="http://www.baidu.com">
-                                        <div class="pro-img">
-                                            <img src="/images/nav-img/nav-1.png">
-                                        </div>
-                                        <div class="pro-name">小米9</div>
-                                        <div class="pro-price">2299元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="http://www.baidu.com">
-                                        <div class="pro-img">
-                                            <img src="/images/nav-img/nav-1.png">
-                                        </div>
-                                        <div class="pro-name">小米9</div>
-                                        <div class="pro-price">2299元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="http://www.baidu.com">
-                                        <div class="pro-img">
-                                            <img src="/images/nav-img/nav-1.png">
-                                        </div>
-                                        <div class="pro-name">小米9</div>
-                                        <div class="pro-price">2299元</div>
+                                        <div class="pro-name">{{ item.name }}</div>
+                                        <div class="pro-price">{{ item.price | currency }}</div>
                                     </a>
                                 </li>
                             </ul>
@@ -164,19 +120,37 @@ export default {
     name: 'nav-header',
     data(){
         return {
-            userName: 'Jack',
-            phoneList: []
+            userName: 'Ha',
+            phoneList: [],
+        }
+    },
+    filters: {
+        currency(val){
+            if (val == 0) {
+                return 0.00;
+            }
+            return val.toFixed(0) + '元';
         }
     },
     mounted(){
-
+        this.getProductList();
     },
     methods: {
         getProductList(){
-            this.axios.get('/mock/cart.json').then((res) => {
-                this.phoneList = res.data.data;
+            this.axios.get('/products',{
+                params: {
+                    categoryId: '100012',
+                    pageSize: 6
+                }
+            }).then((res) => {
+                this.phoneList = res.data.data.list;
             })
+            // this.axios.get('/mock/cart.json').then( (res) => {
+            //     this.phoneList2 = res.data.data
+            // })
         }
+
+        //todo 跳转到登录页面和购物车页面
     }
 }
 </script>
