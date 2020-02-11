@@ -84,11 +84,68 @@
                     </div>
                     <div class="menu-item">
                         <span>RedMi红米</span>
-                        <!-- <div class="children"></div> -->
+                        <div class="children"></div>
                     </div>
                     <div class="menu-item">
                         <span>电视</span>
-                        <!-- <div class="children"></div> -->
+                        <div class="children">
+                            <ul>
+                                <li class="product">
+                                    <a href="http://www.baidu.com">
+                                        <div class="pro-img">
+                                            <img src="/images/nav-img/nav-3-1.jpg">
+                                        </div>
+                                        <div class="pro-name">小米壁画电视</div>
+                                        <div class="pro-price">2299元</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="http://www.baidu.com">
+                                        <div class="pro-img">
+                                            <img src="/images/nav-img/nav-3-2.jpg">
+                                        </div>
+                                        <div class="pro-name">小米全面屏电视</div>
+                                        <div class="pro-price">2299元</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="http://www.baidu.com">
+                                        <div class="pro-img">
+                                            <img src="/images/nav-img/nav-3-3.png">
+                                        </div>
+                                        <div class="pro-name">小米电视4</div>
+                                        <div class="pro-price">2299元</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="http://www.baidu.com">
+                                        <div class="pro-img">
+                                            <img src="/images/nav-img/nav-3-4.jpg">
+                                        </div>
+                                        <div class="pro-name">小米电视4A</div>
+                                        <div class="pro-price">2299元</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="http://www.baidu.com">
+                                        <div class="pro-img">
+                                            <img src="/images/nav-img/nav-3-5.jpg">
+                                        </div>
+                                        <div class="pro-name">小米电视5</div>
+                                        <div class="pro-price">2299元</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="http://www.baidu.com">
+                                        <div class="pro-img">
+                                            <img src="/images/nav-img/nav-3-6.png">
+                                        </div>
+                                        <div class="pro-name">查看全部</div>
+                                        <div class="pro-price"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="topbar-2-search">
@@ -104,7 +161,23 @@
 
 <script>
 export default {
-    name: 'nav-header'
+    name: 'nav-header',
+    data(){
+        return {
+            userName: 'Jack',
+            phoneList: []
+        }
+    },
+    mounted(){
+
+    },
+    methods: {
+        getProductList(){
+            this.axios.get('/mock/cart.json').then((res) => {
+                this.phoneList = res.data.data;
+            })
+        }
+    }
 }
 </script>
 
@@ -180,15 +253,21 @@ export default {
                     }
                     &:hover {
                         color: #F60;
+                        .children {
+                            height: 220px;
+                            box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
+                        }
                     }
                     .children {
                         width:1226px;
-                        height:220px;
-                        box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
+                        height:0;
+                        overflow: hidden;
                         position: absolute;
                         top: 112px;
                         left: 0;
                         border-top: 1px solid #e5e5e5;
+                        transition: height .5s;
+                        box-shadow: 0; 
                         ul {
                             height: 100%;
                             .product {
