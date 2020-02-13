@@ -230,6 +230,7 @@ export default {
                         .children {
                             height: 220px;
                             box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
+                            border-top: 1px solid #e5e5e5;
                         }
                     }
                     .children {
@@ -239,9 +240,9 @@ export default {
                         position: absolute;
                         top: 112px;
                         left: 0;
-                        border-top: 1px solid #e5e5e5;
                         transition: height .5s;
                         box-shadow: 0; 
+                        background-color: #fff;
                         ul {
                             height: 100%;
                             .product {
