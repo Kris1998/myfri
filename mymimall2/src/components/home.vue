@@ -8,30 +8,13 @@
                     <ul>
                         <li class="sidebar-li">手机 电话卡<span class="icon"></span>
                             <div class="children">
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
-                                <li><span class="children-icon"></span>小米9</li>
+                                <ul v-for="(item , index) in menuList" :key="index">
+                                    <li v-for="(sub , index2) in item" :key="index2">
+                                        <a href="javascript:;">
+                                            <img :src="sub ? sub.img : '/images/item-box-1.png'">{{sub ? sub.name : '小米CC9'}}
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </li>
                         <li class="sidebar-li">电视 盒子<span class="icon"></span></li>
@@ -105,6 +88,31 @@ export default {
                     id: 5,
                     img: 'slide-5.jpg'
                 }
+            ],
+            menuList: [
+                [
+                    {
+                        id: 30,
+                        img: '/images/item-box-1.png',
+                        name: '小米CC9'
+                    },
+                    {
+                        id: 31,
+                        img: '/images/item-box-2.png',
+                        name: '小米8青春版'
+                    },
+                    {
+                        id: 32,
+                        img: '/images/item-box-3.jpg',
+                        name: 'Redmi K20'
+                    },
+                    {
+                        id: 33,
+                        img: '/images/item-box-4.jpg',
+                        name: '移动4G专区'
+                    }
+                ],
+                [0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]
             ]
         }
     },
@@ -174,29 +182,36 @@ export default {
                         }
                     }
                     .children {
-                        width: 0;
+                        width: 0px;
                         height: 451px;
                         overflow: hidden;
                         background-color: $colorG;
                         position: absolute;
                         top: 0;
                         left: 264px;
-                        // transition: width .5s ease .5s;
-                        li {
-                            display: inline-block;
-                            width: 25%;
-                            height: 16.6%;
-                            line-height: 75px;
-                            color: $colorB;
-                            font-family: FZLanTingHeiS-R-GB;
-                            font-size: 14px;
-                            font-weight: bold;
-                            .children-icon {
-                                @include bgImg(35px,42px,'/images/children-icon.png');
-                                vertical-align: middle;
-                                padding-left: 23px;
-                                margin-right: 15px;
-                                background-origin: content-box;
+                        ul {
+                            width: 962px;
+                            height: 75px;
+                            padding-top: 0;
+                            li {
+                                display: inline-block;
+                                width: 25%;
+                                height: 100%;
+                                line-height: 75px;
+                                font-family: FZLanTingHeiS-R-GB;
+                                font-size: 14px;
+                                font-weight: bold;
+                                a {
+                                    color: $colorB;
+                                    display: block;
+                                    img {
+                                        vertical-align: middle;
+                                        width: 35px;
+                                        height: 42px;
+                                        padding-left: 23px;
+                                        padding-right: 15px;
+                                    }
+                                }
                             }
                         }
                     }
