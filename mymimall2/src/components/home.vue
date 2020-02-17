@@ -38,6 +38,18 @@
                 </div>
             </div>
         </div>
+        <div class="content-2">
+            <div class="container">
+                <a href="javascript:;" v-for="(item, index) in adList" :key="index">
+                    <img :src="'/images/ads/ads-' + item.img">
+                </a>
+            </div>
+        </div>
+        <div class="content-3">
+            <div class="container">
+                <a href="javascript:;"><img src="/images/banner-1.png"></a>
+            </div>
+        </div>
         <service-bar></service-bar>
         <nav-footer></nav-footer>
     </div>
@@ -113,6 +125,24 @@ export default {
                     }
                 ],
                 [0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]
+            ],
+            adList: [
+                {
+                    id: 33,
+                    img: '1.png'
+                },
+                {
+                    id: 48,
+                    img: '2.jpg'
+                },
+                {
+                    id: 45,
+                    img: '3.png'
+                },
+                {
+                    id: 47,
+                    img: '4.jpg'
+                }
             ]
         }
     },
@@ -218,6 +248,25 @@ export default {
                 }
             }
         }
+    }
+}
+.content-2 {
+    margin-top: 14px;
+    margin-bottom: 31px;
+    .container{
+        display: flex;
+        justify-content: space-between;
+        img {
+            width: 296px;
+            height: 167px;
+        }
+    }
+}
+.content-3 {
+    padding-bottom: 50px; 
+    img {
+        width: 1226px;
+        height: 130px;
     }
 }
 </style>
