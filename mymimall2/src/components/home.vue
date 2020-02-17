@@ -64,12 +64,56 @@
 import navHeader from './navheader'
 import navFooter from './navfooter'
 import serviceBar from './servicebar'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+
 export default {
     name: 'home',
+    data(){
+        return {
+            swiperOption: {
+                autoplay: true,
+                loop: true,
+                effect: 'cube',
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                navigation: {
+                    prevEl: '.swiper-button-prev',
+                    nextEl: '.swiper-button-next'
+                }
+            },
+            sliderItems: [
+                {
+                    id: 1,
+                    img: 'slide-1.jpg'
+                },
+                {
+                    id: 2,
+                    img: 'slide-2.jpg'
+                },
+                {
+                    id: 3,
+                    img: 'slide-3.jpg'
+                },
+                {
+                    id: 4,
+                    img: 'slide-4.jpg'
+                },
+                {
+                    id: 5,
+                    img: 'slide-5.jpg'
+                }
+            ]
+        }
+    },
     components: {
         navHeader,
         navFooter,
-        serviceBar
+        serviceBar,
+        swiper,
+        swiperSlide
     }
 }
 </script>

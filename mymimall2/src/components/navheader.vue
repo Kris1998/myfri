@@ -121,7 +121,7 @@ export default {
     data(){
         return {
             userName: 'Ha',
-            phoneList: [],
+            phoneList: []
         }
     },
     filters: {
@@ -155,7 +155,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../assets/scss/base.scss';
 @import '../assets/scss/mixin.scss';
 @import '../assets/scss/config.scss';
@@ -243,6 +243,7 @@ export default {
                         transition: height .5s;
                         box-shadow: 0; 
                         background-color: #fff;
+                        z-index: 99;
                         ul {
                             height: 100%;
                             .product {
