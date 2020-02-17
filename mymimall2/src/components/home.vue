@@ -2,6 +2,59 @@
     <div>
         home
         <nav-header></nav-header>
+        <div class="content-1">
+            <div class="container">
+                <div class="sidebar">
+                    <ul>
+                        <li class="sidebar-li">手机 电话卡<span class="icon"></span>
+                            <div class="children">
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                                <li><span class="children-icon"></span>小米9</li>
+                            </div>
+                        </li>
+                        <li class="sidebar-li">电视 盒子<span class="icon"></span></li>
+                        <li class="sidebar-li">笔记本 平板<span class="icon"></span></li>
+                        <li class="sidebar-li">家电 插线板<span class="icon"></span></li>
+                        <li class="sidebar-li">出行 穿戴<span class="icon"></span></li>
+                        <li class="sidebar-li">耳机 音箱<span class="icon"></span></li>
+                        <li class="sidebar-li">电源 配件<span class="icon"></span></li>
+                        <li class="sidebar-li">生活 箱包<span class="icon"></span></li>
+                    </ul>
+                </div>
+                <div class="swiper-box">
+                    <swiper :options="swiperOption">
+                        <swiper-slide v-for="( item, index ) in sliderItems " :key="index">
+                            <a href="http://www.baidu.com"><img :src="'/images/slider/'+item.img"></a>
+                        </swiper-slide>
+                        <div class="swiper-pagination" slot="pagination"></div>
+                        <div class="swiper-button-prev" slot="button-prev"></div>
+                        <div class="swiper-button-next" slot="button-next"></div>
+                    </swiper>
+                </div>
+            </div>
+        </div>
         <service-bar></service-bar>
         <nav-footer></nav-footer>
     </div>
@@ -20,3 +73,92 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/scss/base.scss';
+@import '../assets/scss/config.scss';
+@import '../assets/scss/mixin.scss';
+.content-1 {
+    .container {
+        .swiper-box {
+            width: 1226px;
+            .swiper-container {
+                .swiper-wrapper {
+                    a {
+                        img {
+                            width: 1226px;
+                            height: 451px;
+                        }
+                    }
+                }
+                .swiper-button-prev {
+                    left: 270px;
+                }
+            }
+        }
+        .sidebar {
+            width: 264px;
+            height: 451px;
+            background-color: rgba(51,51,51,0.3);
+            position: absolute;
+            z-index: 9;
+            ul {
+                padding-top: 26px;
+                .sidebar-li {
+                    width: 234px;
+                    height: 50px;
+                    line-height: 50px;
+                    color: $colorG;
+                    font-size: 16px;
+                    font-family: FZLanTingHeiS-R-GB;
+                    font-weight: bold;
+                    padding-left: 30px;
+                    .icon {
+                        @include bgImg(10px,15px,'/images/icon-arrow.png');
+                        // position: absolute;
+                        // top: 18px;
+                        // right: 30px;
+                        float: right;
+                        margin-right: 30px;
+                        margin-top: 18px;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $colorA;
+                        .children {
+                            width: 962px;
+                        }
+                    }
+                    .children {
+                        width: 0;
+                        height: 451px;
+                        overflow: hidden;
+                        background-color: $colorG;
+                        position: absolute;
+                        top: 0;
+                        left: 264px;
+                        // transition: width .5s ease .5s;
+                        li {
+                            display: inline-block;
+                            width: 25%;
+                            height: 16.6%;
+                            line-height: 75px;
+                            color: $colorB;
+                            font-family: FZLanTingHeiS-R-GB;
+                            font-size: 14px;
+                            font-weight: bold;
+                            .children-icon {
+                                @include bgImg(35px,42px,'/images/children-icon.png');
+                                vertical-align: middle;
+                                padding-left: 23px;
+                                margin-right: 15px;
+                                background-origin: content-box;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+</style>
