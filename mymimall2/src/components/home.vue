@@ -41,13 +41,13 @@
         <div class="content-2">
             <div class="container">
                 <a href="javascript:;" v-for="(item, index) in adList" :key="index">
-                    <img :src="'/images/ads/ads-' + item.img">
+                    <img v-lazy="'/images/ads/ads-' + item.img">
                 </a>
             </div>
         </div>
         <div class="content-3">
             <div class="container">
-                <a href="javascript:;"><img src="/images/banner-1.png"></a>
+                <a href="javascript:;"><img v-lazy="'/images/banner-1.png'"></a>
             </div>
         </div>
         <div class="content-4">
@@ -66,7 +66,7 @@
                                 <div class="bgcred" v-else-if="productTag[index][index2] == 'kill'">秒杀</div>
                                 <div class="bgcred" v-else-if="productTag[index][index2] == 'discount'">减200元</div>
                                 <div class="other" v-else></div>
-                                <img :src="item.mainImage">
+                                <img v-lazy="item.mainImage">
                                 <p class="item-name">{{item.name}}</p>
                                 <p class="item-subtitle">{{item.subtitle}}</p>
                                 <p class="item-price">{{item.price}}元<a href="javascript:;" @click="addCart"></a></p>
