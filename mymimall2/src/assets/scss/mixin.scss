@@ -11,3 +11,11 @@
     background: url($url) no-repeat;
     background-size: $bgsize;
 }
+
+@mixin pos($pos:absolute,$left:0,$top:0,$w:100%,$h:100%){
+    position: $pos;
+    left: $left;
+    top: $top;
+    width: $w;
+    height: $h;
+}

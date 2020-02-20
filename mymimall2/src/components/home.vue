@@ -50,8 +50,39 @@
                 <a href="javascript:;"><img src="/images/banner-1.png"></a>
             </div>
         </div>
+        <div class="content-4">
+            <div class="container">
+                <div class="title">手机</div>
+                <div class="product-container">
+                    <div class="left-banner">
+                        <a href="javascript:;">
+                            <img src="/images/mix-alpha.jpg">
+                        </a>
+                    </div>
+                    <div class="product-list">
+                        <div class="product-row" v-for="(row, index) in productList" :key="index">
+                            <a href="javascript:;" class="product-item" v-for="(item, index2) in row" :key="index2">
+                                <div class="bgcgreen" v-if="productTag[index][index2] == 'new'">新品</div>
+                                <div class="bgcred" v-else-if="productTag[index][index2] == 'kill'">秒杀</div>
+                                <div class="bgcred" v-else-if="productTag[index][index2] == 'discount'">减200元</div>
+                                <div class="other" v-else></div>
+                                <img :src="item.mainImage">
+                                <p class="item-name">{{item.name}}</p>
+                                <p class="item-subtitle">{{item.subtitle}}</p>
+                                <p class="item-price">{{item.price}}元<a href="javascript:;" @click="addCart"></a></p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <service-bar></service-bar>
         <nav-footer></nav-footer>
+        <modal title="提示" confirmText="查看购物车" :showModal="showModal" @close="closeModal">
+            <template v-slot:body>
+                <p class="modal-p">添加购物车成功</p>
+            </template>
+        </modal>
     </div>
 </template>
 
@@ -59,6 +90,7 @@
 import navHeader from './navheader'
 import navFooter from './navfooter'
 import serviceBar from './servicebar'
+import modal from './modal'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 
@@ -143,7 +175,32 @@ export default {
                     id: 47,
                     img: '4.jpg'
                 }
-            ]
+            ],
+            productList: [],
+            productTag: [['new','kill','','new'],['new','new','discount','new']],
+            showModal: false
+        }
+    },
+    mounted(){
+        this.getProductList();
+    },
+    methods: {
+        getProductList(){
+            this.axios.get('/products',{
+                params: {
+                    categoryId: '100012',
+                    pageSize: 14
+                }
+            }).then( (res) => {
+                let list = res.data.data.list.slice(6,14);
+                this.productList = [list.slice(0,4), list.slice(4,8)]
+            })
+        },
+        addCart(){
+            this.showModal = true;
+        },
+        closeModal(){
+            this.showModal = false;
         }
     },
     components: {
@@ -151,7 +208,8 @@ export default {
         navFooter,
         serviceBar,
         swiper,
-        swiperSlide
+        swiperSlide,
+        modal
     }
 }
 </script>
@@ -267,6 +325,99 @@ export default {
     img {
         width: 1226px;
         height: 130px;
+    }
+}
+.content-4 {
+    background-color: $colorJ;
+    padding-bottom: 50px;
+    .container {
+        .title {
+            color: $colorB;
+            font-size: 22px;
+            font-family: $familyA;
+            padding-top: 30px;
+            padding-bottom: 20px;
+        }
+        .product-container {
+            width: 1226px;
+            height: 619px;
+            @include flex();
+            .left-banner {
+                a {
+                    display: block;
+                    width: 224px;
+                    height: 619px;
+                    img {
+                        width: 224px;
+                        height: 619px;
+                    }
+                }                
+            }
+            .product-list {
+                width: 986px;
+                height: 619px;
+                @include flex();
+                flex-direction: column;
+                .product-row {
+                    width: 986px;
+                    height: 302px;
+                    @include flex();
+                    .product-item {
+                        display: block;
+                        width: 236px;
+                        height: 302px;
+                        background-color: $colorG;
+                        text-align: center;
+                        font-family: $familyA;
+                        div {
+                            width: 67px;
+                            height: 24px;
+                            font-size: 14px;
+                            color: $colorG;
+                            margin: 0 auto;
+                            line-height: 24px;
+                        }
+                        .bgcred {
+                            background-color: #E82626;
+                        }
+                        .bgcgreen {
+                            background-color: #7ECF68;
+                        }
+                        .other {
+                            background-color: #fff;
+                        }
+                        img {
+                            height: 154px;
+                            padding: 20px 0;
+                        }
+                        .item-name {
+                            line-height: 13px;
+                            font-size: 14px;
+                            color: $colorB;
+                            padding-bottom: 8px;
+                        }
+                        .item-subtitle {
+                            line-height: 13px;
+                            font-size: 12px;
+                            color: $colorD;
+                            padding-bottom: 13px;
+                        }
+                        .item-price {
+                            line-height: 13px;
+                            font-size: 14px;
+                            color: #F20A0A;
+                        }
+                        p {
+                            a {
+                                @include bgImg(22px,22px,'/images/icon-cart-hover.png');
+                                vertical-align: middle;
+                                margin-left: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 </style>
