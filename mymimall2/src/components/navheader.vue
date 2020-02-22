@@ -9,8 +9,8 @@
                     <a href="javascript:;">协议规则</a>
                 </div>
                 <div class="topbar-1-right">
-                    <a href="javascript:;" v-if="userName">{{ userName }}</a>
-                    <a href="javascript:;" v-else>登录</a>
+                    <a href="javascript:;" v-if="username">{{ username }}</a>
+                    <a href="javascript:;" @click="goToLogin" v-else>登录</a>
                     <a href="javascript:;">我的订单</a>
                     <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车</a>
                 </div>
@@ -116,13 +116,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'nav-header',
     data(){
         return {
-            userName: 'Ha',
             phoneList: []
         }
+    },
+    computed: {
+        ...mapState({
+            username: 'username'
+        })
     },
     filters: {
         currency(val){
@@ -143,13 +148,15 @@ export default {
                     pageSize: 6
                 }
             }).then((res) => {
-                this.phoneList = res.data.data.list;
+                this.phoneList = res.list;
             })
             // this.axios.get('/mock/cart.json').then( (res) => {
             //     this.phoneList2 = res.data.data
             // })
+        }, 
+        goToLogin(){
+            this.$router.push('login');
         }
-
         //todo 跳转到登录页面和购物车页面
     }
 }

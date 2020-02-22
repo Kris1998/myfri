@@ -8,7 +8,7 @@
                     <slot name="body"></slot>
                 </div>
                 <div class="dialog-footer">
-                    <a class="btn btn-small" href="javascript:;" v-if="btnType == 1">{{confirmText}}</a>
+                    <a class="btn btn-small" href="javascript:;" v-if="btnType == 1" @click="clickConfirm">{{confirmText}}</a>
                     <div class="btn-group" v-else>
                         <a class="btn btn-small" href="javascript:;">{{confirmText}}</a>
                         <a class="btn btn-small btn-grey" href="javascript:;">{{cancelText}}</a>
@@ -51,6 +51,9 @@ export default {
     methods: {
         closeSelf(){
             this.$emit('close');
+        },
+        clickConfirm(){
+            this.$emit('confirm');
         }
     }
 }

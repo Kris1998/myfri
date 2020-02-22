@@ -78,7 +78,7 @@
         </div>
         <service-bar></service-bar>
         <nav-footer></nav-footer>
-        <modal title="提示" confirmText="查看购物车" :showModal="showModal" @close="closeModal">
+        <modal title="提示" confirmText="查看购物车" :showModal="showModal" @close="closeModal" @confirm="goToCart">
             <template v-slot:body>
                 <p class="modal-p">添加购物车成功</p>
             </template>
@@ -192,7 +192,7 @@ export default {
                     pageSize: 14
                 }
             }).then( (res) => {
-                let list = res.data.data.list.slice(6,14);
+                let list = res.list.slice(6,14);
                 this.productList = [list.slice(0,4), list.slice(4,8)]
             })
         },
@@ -201,6 +201,9 @@ export default {
         },
         closeModal(){
             this.showModal = false;
+        },
+        goToCart(){
+            this.$router.push('login');
         }
     },
     components: {
