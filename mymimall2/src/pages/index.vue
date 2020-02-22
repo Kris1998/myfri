@@ -1,7 +1,5 @@
 <template>
     <div>
-        home
-        <nav-header></nav-header>
         <div class="content-1">
             <div class="container">
                 <div class="sidebar">
@@ -77,7 +75,6 @@
             </div>
         </div>
         <service-bar></service-bar>
-        <nav-footer></nav-footer>
         <modal title="提示" confirmText="查看购物车" :showModal="showModal" @close="closeModal" @confirm="goToCart">
             <template v-slot:body>
                 <p class="modal-p">添加购物车成功</p>
@@ -87,10 +84,8 @@
 </template>
 
 <script>
-import navHeader from './navheader'
-import navFooter from './navfooter'
-import serviceBar from './servicebar'
-import modal from './modal'
+import serviceBar from '../components/ServiceBar'
+import modal from '../components/Modal'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 
@@ -207,8 +202,6 @@ export default {
         }
     },
     components: {
-        navHeader,
-        navFooter,
         serviceBar,
         swiper,
         swiperSlide,
