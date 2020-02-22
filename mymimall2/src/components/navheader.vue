@@ -167,6 +167,7 @@ export default {
 @import '../assets/scss/mixin.scss';
 @import '../assets/scss/config.scss';
 .nav-header {
+    border-bottom: 1px solid $colorH;
     .topbar-1 {
         height: 39px;
         line-height: 39px;

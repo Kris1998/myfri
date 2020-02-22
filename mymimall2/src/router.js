@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from './pages/home'
 import login from './pages/login'
 import index from './pages/index'
+import product from './pages/product'
 
 Vue.use(Router);
 
@@ -17,6 +18,11 @@ export default new Router({
                     path: '/index',
                     component: index,
                     name: 'index'
+                },
+                {
+                    path: '/product',
+                    component: product,
+                    name: 'product'
                 }
             ]
         },
