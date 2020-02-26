@@ -67,11 +67,11 @@ export default {
     @include pos(fixed);
     transition: all .5s;
     opacity: 1;
+    z-index: 999999999;
     .modal-mask {
         @include pos(fixed);
         background-color: $colorI;
         opacity: 0.5;
-        z-index: 999999999;
     }
     .modal-dialog {
         @include pos(absolute,50%,40%,660px,auto);

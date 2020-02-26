@@ -23,6 +23,9 @@ export default {
     mounted(){
         window.addEventListener('scroll',this.fixTheBar)
     },
+    destroyed(){
+        window.removeEventListener('scroll',this.fixTheBar);
+    },
     methods: {
         fixTheBar(){
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
@@ -43,6 +46,7 @@ export default {
         top: 0;
         width: 100%;
         background-color: $colorG;
+        z-index: 9;
     }
     .container {
         @include flex();
