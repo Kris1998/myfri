@@ -26,8 +26,8 @@
                         <span>小米手机</span>
                         <div class="children">
                             <ul>
-                                <li class="product" v-for="(item,index) in phoneList" :key=index>
-                                    <a href="http://www.baidu.com">
+                                <li class="product" v-for="(item,index) in phoneList" :key="index">
+                                    <a :href="`/#/product/${item.id}`">
                                         <div class="pro-img">
                                             <img :src="item.mainImage">
                                         </div>

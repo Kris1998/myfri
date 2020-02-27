@@ -1,16 +1,16 @@
 <template>
     <div class="product">
-        <product-params></product-params>
+        <product-params :title="product.name"></product-params>
         <div class="item-bg">
-            <p class="item-title">小米8</p>
-            <p class="item-subtitle">8周年旗舰版</p>
+            <p class="item-title">{{product.name}}</p>
+            <p class="item-subtitle">{{product.subtitle}}</p>
             <p class="item-property">
                 <a href="javascript:;">全球首款双频GPS</a>
                 <a href="javascript:;">骁龙845</a>
                 <a href="javascript:;">AI变焦双摄</a>
                 <a href="javascript:;">红外人脸识别</a>
             </p>
-            <p class="item-price">￥<span class="item-price-num">2599</span></p>
+            <p class="item-price">￥<span class="item-price-num">{{product.price}}</span></p>
         </div>
         <div class="item-bg2"></div>
         <div class="item-bg3"></div>
@@ -64,7 +64,19 @@ export default {
                     clickable: true
                 }
             },
-            showVideo: false
+            showVideo: false,
+            product: {}
+        }
+    },
+    mounted(){
+        this.getProduct();
+    },
+    methods: {
+        getProduct(){
+            let id = this.$route.params.id
+            this.axios.get('/products/'+id).then( (res) => {
+                this.product = res;
+            })
         }
     },
     components: {

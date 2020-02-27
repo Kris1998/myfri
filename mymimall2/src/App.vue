@@ -15,7 +15,7 @@ export default {
   methods: {
     ...mapActions(['saveUserName']),
     getUser(){
-      this.axios.get('/user').then( (res) => {
+      this.axios.get('/user').then( (res={}) => {
         this.saveUserName(res.username);
       });
     },

@@ -1,7 +1,7 @@
 <template>
     <div class="product-params" :class="{'isFixed': isFixed}">
         <div class="container">
-            <div class="params-left">小米8 透明探索版</div>
+            <div class="params-left">{{title}}</div>
             <div class="params-right">
                 <a class="params-right-link" href="javascript:;">概述</a>
                 <a class="params-right-link" href="javascript:;">参数</a>
@@ -20,6 +20,7 @@ export default {
             isFixed: false
         }
     },
+    props: ['title'],
     mounted(){
         window.addEventListener('scroll',this.fixTheBar)
     },

@@ -59,7 +59,7 @@
                     </div>
                     <div class="product-list">
                         <div class="product-row" v-for="(row, index) in productList" :key="index">
-                            <a href="javascript:;" class="product-item" v-for="(item, index2) in row" :key="index2">
+                            <a :href="`/#/product/${item.id}`" class="product-item" v-for="(item, index2) in row" :key="index2">
                                 <div class="bgcgreen" v-if="productTag[index][index2] == 'new'">新品</div>
                                 <div class="bgcred" v-else-if="productTag[index][index2] == 'kill'">秒杀</div>
                                 <div class="bgcred" v-else-if="productTag[index][index2] == 'discount'">减200元</div>
