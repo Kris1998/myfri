@@ -6,7 +6,8 @@
                 <a class="params-right-link" href="javascript:;">概述</a>
                 <a class="params-right-link" href="javascript:;">参数</a>
                 <a class="params-right-link" href="javascript:;">用户评价</a>
-                <a class="btn btn-small" href="javascript:;">立即购买</a>
+                <!-- <a class="btn btn-small" href="javascript:;">立即购买</a> -->
+                <slot name="button"></slot>
             </div>
         </div>
     </div>
@@ -39,7 +40,6 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/scss/config.scss';
 @import '../assets/scss/base.scss';
-@import '../assets/scss/button.scss';
 @import '../assets/scss/mixin.scss';
 .product-params {
     &.isFixed {

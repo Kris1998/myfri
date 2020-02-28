@@ -7,7 +7,8 @@ import mutations from './mutations'
 import actions from './actions'
 
 const state = {
-    username: ''
+    username: '',
+    cartCount: 0
 }
 
 export default new Vuex.Store({

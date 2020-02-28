@@ -61,6 +61,7 @@ export default {
             }).then( (res) => {
                 // this.$cookie.set('userId',res.id,{expires:'1M'});
                 this.saveUserName(res.username);
+                
                 this.$router.push('/#/');
             })
         },

@@ -67,7 +67,7 @@
                                 <img v-lazy="item.mainImage">
                                 <p class="item-name">{{item.name}}</p>
                                 <p class="item-subtitle">{{item.subtitle}}</p>
-                                <p class="item-price">{{item.price}}元<a href="javascript:;" @click="addCart"></a></p>
+                                <p class="item-price">{{item.price}}元<a href="javascript:;" @click="addCart(item.id)"></a></p>
                             </a>
                         </div>
                     </div>
@@ -88,6 +88,7 @@ import serviceBar from '../components/ServiceBar'
 import modal from '../components/Modal'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import { mapActions } from 'vuex'
 
 export default {
     name: 'home',
@@ -180,6 +181,7 @@ export default {
         this.getProductList();
     },
     methods: {
+        ...mapActions(['saveCartCount']),
         getProductList(){
             this.axios.get('/products',{
                 params: {
@@ -191,8 +193,14 @@ export default {
                 this.productList = [list.slice(0,4), list.slice(4,8)]
             })
         },
-        addCart(){
+        addCart(id){
             this.showModal = true;
+            this.axios.post('/carts',{
+                productId: id,
+                selected: true
+            }).then((res)=>{
+                this.saveCartCount(res.cartTotalQuantity);
+            })
         },
         closeModal(){
             this.showModal = false;

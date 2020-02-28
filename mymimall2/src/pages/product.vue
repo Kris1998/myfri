@@ -1,6 +1,10 @@
 <template>
     <div class="product">
-        <product-params :title="product.name"></product-params>
+        <product-params :title="product.name">
+            <template v-slot:button>
+                <a class="btn btn-small" href="javascript:;" @click="goToDetail">立即购买</a>
+            </template>
+        </product-params>
         <div class="item-bg">
             <p class="item-title">{{product.name}}</p>
             <p class="item-subtitle">{{product.subtitle}}</p>
@@ -73,10 +77,14 @@ export default {
     },
     methods: {
         getProduct(){
-            let id = this.$route.params.id
+            let id = this.$route.params.id;
             this.axios.get('/products/'+id).then( (res) => {
                 this.product = res;
             })
+        },
+        goToDetail(){
+            let id = this.$route.params.id;
+            this.$router.push( `/detail/${id}`);
         }
     },
     components: {
@@ -91,6 +99,7 @@ export default {
 @import '../assets/scss/config.scss';
 @import '../assets/scss/base.scss';
 @import '../assets/scss/mixin.scss';
+@import '../assets/scss/button.scss';
 .product {
     .item-bg {
         width: auto;

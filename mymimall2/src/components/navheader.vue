@@ -12,7 +12,7 @@
                     <a href="javascript:;" v-if="username">{{ username }}</a>
                     <a href="javascript:;" @click="goToLogin" v-else>登录</a>
                     <a href="javascript:;">我的订单</a>
-                    <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车</a>
+                    <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车<span v-show="cartCount">({{cartCount}})</span></a>
                 </div>
             </div>
         </div>
@@ -124,11 +124,7 @@ export default {
             phoneList: []
         }
     },
-    computed: {
-        ...mapState({
-            username: 'username'
-        })
-    },
+    computed: mapState(['username','cartCount']),
     filters: {
         currency(val){
             if (val == 0) {

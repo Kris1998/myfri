@@ -13,15 +13,15 @@ export default {
     this.getCartCount();
   },
   methods: {
-    ...mapActions(['saveUserName']),
+    ...mapActions(['saveUserName','saveCartCount']),
     getUser(){
-      this.axios.get('/user').then( (res={}) => {
+      this.axios.get('/user').then( (res) => {
         this.saveUserName(res.username);
       });
     },
     getCartCount(){
-      this.axios.get('/carts/products/sum').then( () => {
-        //todo
+      this.axios.get('/carts/products/sum').then( (res) => {
+        this.saveCartCount(res);
       });
     }
   }
