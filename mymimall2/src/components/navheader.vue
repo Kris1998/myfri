@@ -8,18 +8,20 @@
                     <a href="javascript:;">云服务</a>
                     <a href="javascript:;">协议规则</a>
                 </div>
-                <div class="topbar-1-right">
+                <div class="topbar-1-right
+                ">
                     <a href="javascript:;" v-if="username">{{ username }}</a>
                     <a href="javascript:;" @click="goToLogin" v-else>登录</a>
+                    <a href="javascript:;" v-if="username" @click="logout">退出账号</a>
                     <a href="javascript:;">我的订单</a>
-                    <a href="javascript:;" class="my-cart"><span class="icon-cart"></span>购物车<span v-show="cartCount">({{cartCount}})</span></a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart"><span class="icon-cart"></span>购物车<span v-show="cartCount">({{cartCount}})</span></a>
                 </div>
             </div>
         </div>
         <div class="topbar-2">
             <div class="container">
-                <div class="topbar-2-logo">
-                    <a href="javascript:;"></a>
+                <div class="mi-logo">
+                    <a href="/#/index"></a>
                 </div>
                 <div class="topbar-2-menu">
                     <div class="menu-item">
@@ -116,7 +118,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
     name: 'nav-header',
     data(){
@@ -137,6 +139,10 @@ export default {
         this.getProductList();
     },
     methods: {
+        ...mapActions([
+            'saveUserName',
+            'saveCartCount'
+        ]),
         getProductList(){
             this.axios.get('/products',{
                 params: {
@@ -146,12 +152,20 @@ export default {
             }).then((res) => {
                 this.phoneList = res.list;
             })
-            // this.axios.get('/mock/cart.json').then( (res) => {
-            //     this.phoneList2 = res.data.data
-            // })
         }, 
         goToLogin(){
-            this.$router.push('login');
+            this.$router.push('/login');
+        },
+        logout(){
+            this.axios.post('/user/logout').then(()=>{
+                this.$message.success('退出登录成功');
+                this.saveUserName('');
+                this.saveCartCount(0);
+                this.$cookie.set('userId','',{expires:'-1'});
+            });
+        },
+        goToCart(){
+            this.$router.push('cart');
         }
         //todo 跳转到登录页面和购物车页面
     }
@@ -159,9 +173,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/base.scss';
 @import '../assets/scss/mixin.scss';
 @import '../assets/scss/config.scss';
+@import '../assets/scss/base.scss';
 .nav-header {
     border-bottom: 1px solid $colorH;
     .topbar-1 {
@@ -194,29 +208,6 @@ export default {
             height: 112px;
             @include flex();
             position: relative;
-            .topbar-2-logo {
-                display: inline-block;
-                width: 55px;
-                height: 55px;
-                background-color: #F60;
-                a {
-                    display: inline-block;
-                    width: 110px;
-                    height: 55px;
-                    transition: margin-left .5s ease 0s;
-                    &:before {
-                        content: ' ';
-                        @include bgImg(55px,55px,'/images/mi-logo.png');
-                    }
-                    &:after {
-                        content: ' ';
-                        @include bgImg(55px,55px,'/images/mi-home.png');
-                    }
-                    &:hover {
-                        margin-left: -55px;
-                    }
-                }
-            }
             .topbar-2-menu {
                 width: 450px;
                 .menu-item {

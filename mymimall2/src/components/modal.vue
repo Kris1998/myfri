@@ -10,8 +10,8 @@
                 <div class="dialog-footer">
                     <a class="btn btn-small" href="javascript:;" v-if="btnType == 1" @click="clickConfirm">{{confirmText}}</a>
                     <div class="btn-group" v-else>
-                        <a class="btn btn-small" href="javascript:;">{{confirmText}}</a>
-                        <a class="btn btn-small btn-grey" href="javascript:;">{{cancelText}}</a>
+                        <a class="btn btn-small" href="javascript:;" @click="clickConfirm">{{confirmText}}</a>
+                        <a class="btn btn-small btn-grey" href="javascript:;" @click="clickCancel">{{cancelText}}</a>
                     </div>
                 </div>
             </div>
@@ -54,6 +54,9 @@ export default {
         },
         clickConfirm(){
             this.$emit('confirm');
+        },
+        clickCancel(){
+            this.$emit('close');
         }
     }
 }

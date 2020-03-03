@@ -77,7 +77,12 @@
         <service-bar></service-bar>
         <modal title="提示" confirmText="查看购物车" :showModal="showModal" @close="closeModal" @confirm="goToCart">
             <template v-slot:body>
-                <p class="modal-p">添加购物车成功</p>
+                <p>添加购物车成功</p>
+            </template>
+        </modal>
+        <modal title="提示" btnType="2" confirmText="登录" cancelText="暂不登录" :showModal="showModal2" @close="closeModal" @confirm="goToLogin">
+            <template v-slot:body>
+                <p>您还未登录！</p>
             </template>
         </modal>
     </div>
@@ -174,7 +179,8 @@ export default {
             ],
             productList: [],
             productTag: [['new','kill','','new'],['new','new','discount','new']],
-            showModal: false
+            showModal: false, //已登录，添加购物车成功
+            showModal2: false //未登录
         }
     },
     mounted(){
@@ -194,19 +200,25 @@ export default {
             })
         },
         addCart(id){
-            this.showModal = true;
             this.axios.post('/carts',{
                 productId: id,
                 selected: true
             }).then((res)=>{
                 this.saveCartCount(res.cartTotalQuantity);
+                this.showModal = true;
+            }).catch(()=>{
+                this.showModal2 = true;
             })
         },
         closeModal(){
             this.showModal = false;
+            this.showModal2 = false;
         },
         goToCart(){
-            this.$router.push('login');
+            this.$router.push('/cart');
+        },
+        goToLogin(){
+            this.$router.push('/login');
         }
     },
     components: {
@@ -219,9 +231,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/base.scss';
 @import '../assets/scss/config.scss';
 @import '../assets/scss/mixin.scss';
+@import '../assets/scss/base.scss';
 .content-1 {
     .container {
         .swiper-box {

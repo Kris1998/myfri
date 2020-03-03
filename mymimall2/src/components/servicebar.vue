@@ -36,10 +36,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/base.scss';
-
 @import '../assets/scss/config.scss';
 @import '../assets/scss/mixin.scss';
+@import '../assets/scss/base.scss';
 .service-bar {
     height: 80px;
     .container {

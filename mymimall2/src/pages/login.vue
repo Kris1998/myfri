@@ -51,7 +51,8 @@ export default {
     },
     methods: {
         ...mapActions([
-            'saveUserName'
+            'saveUserName',
+            'saveCartCount'
         ]),
         login(){
             let {username, password} = this;
@@ -59,9 +60,9 @@ export default {
                 username,
                 password
             }).then( (res) => {
-                // this.$cookie.set('userId',res.id,{expires:'1M'});
+                this.$cookie.set('userId',res.id,{expires:'Session'});
                 this.saveUserName(res.username);
-                
+                this.getCartCount();
                 this.$router.push('/#/');
             })
         },
@@ -76,6 +77,11 @@ export default {
                 // this.$cookie.set('userId',res.id,{expires:'1M'});
                 // this.$router.push('/#/');
             })
+        },
+        getCartCount(){
+            this.axios.get('/carts/products/sum').then( (res) => {
+                this.saveCartCount(res);
+            });
         }
     }
 }

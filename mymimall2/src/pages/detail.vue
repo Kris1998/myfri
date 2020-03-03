@@ -40,11 +40,22 @@
                 <img src="/images/detail/item-price.jpeg">
             </div>
         </div>
+        <modal title="提示" confirmText="查看购物车" :showModal="showModal" @close="closeModal" @confirm="goToCart">
+            <template v-slot:body>
+                <p>添加购物车成功</p>
+            </template>
+        </modal>
+        <modal title="提示" btnType="2" confirmText="登录" cancelText="暂不登录" :showModal="showModal2" @close="closeModal" @confirm="goToLogin">
+            <template v-slot:body>
+                <p>您还未登录！</p>
+            </template>
+        </modal>
     </div>
 </template>
 
 <script>
 import productParams from '../components/ProductParams'
+import modal from '../components/Modal'
 import { mapActions } from 'vuex'
 
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
@@ -54,6 +65,8 @@ export default {
     name: 'detail',
     data(){
         return {
+            showModal: false,
+            showModal2: false,
             swiperPic: [1,2,3,4],
             product: {}, //商品信息
             versionList: ['4GB+64GB 移动4G','6GB+64GB 全网通','6GB+128GB 全网通'],
@@ -94,11 +107,25 @@ export default {
                 selected: true
             }).then((res)=>{
                 this.saveCartCount(res.cartTotalQuantity);
+                this.showModal = true;
+            }).catch(()=>{
+                this.showModal2 = true;
             })
+        },
+        closeModal(){
+            this.showModal = false;
+            this.showModal2 = false;
+        },
+        goToCart(){
+            this.$router.push('/cart');
+        },
+        goToLogin(){
+            this.$router.push('/login');
         }
     },
     components: {
         productParams,
+        modal,
         swiper,
         swiperSlide
     }
@@ -106,10 +133,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/base.scss';
 @import '../assets/scss/config.scss';
 @import '../assets/scss/mixin.scss';
 @import '../assets/scss/button.scss';
+@import '../assets/scss/base.scss';
 .detail {
     .container {
         @include flex(space-between,flex-start);
