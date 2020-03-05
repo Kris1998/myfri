@@ -45,7 +45,7 @@
                     </div>
                     <div class="footer-right colorA">
                         合计：<span class="sum-price">{{sumMoney}}</span>元
-                        <a href="javascript:;" class="btn btn-large btn-to-address" :class="{'btn-unable': checkedCount == 0}">去结算</a>
+                        <a href="javascript:;" class="btn btn-large btn-to-address" :class="{'btn-unable': checkedCount == 0}" @click="goToOrder">去结算</a>
                     </div>
                 </div>
             </div>
@@ -150,6 +150,9 @@ export default {
             }else{
                 this.chooseAll();
             }
+        },
+        goToOrder(){
+            this.$router.push('/order/confirm');
         }
     },
     components: {

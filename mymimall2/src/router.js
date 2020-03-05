@@ -6,6 +6,11 @@ import index from './pages/index'
 import product from './pages/product'
 import detail from './pages/detail'
 import cart from './pages/cart'
+import order from './pages/order'
+import orderConfirm from './pages/orderConfirm'
+import orderList from './pages/orderList'
+import orderPay from './pages/orderPay'
+import alipay from './pages/alipay'
 
 Vue.use(Router);
 
@@ -41,6 +46,28 @@ export default new Router({
             path: '/cart',
             component: cart,
             name: 'cart'
+        },
+        {
+            path: '/order',
+            component: order,
+            children: [
+                {
+                    path: 'confirm',
+                    component: orderConfirm
+                },
+                {
+                    path: 'list',
+                    component: orderList
+                },
+                {
+                    path: 'pay',
+                    component: orderPay
+                },
+                {
+                    path: 'alipay',
+                    component: alipay
+                }
+            ]
         }
     ]
 })
