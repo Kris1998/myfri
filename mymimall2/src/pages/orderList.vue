@@ -6,6 +6,8 @@
             </template>
         </order-header>
         <div class="wrapper">
+            <loading v-show="loading"></loading>
+            <no-data v-show="!loading && orderList.length == 0"></no-data>
             <div class="container">
                 <div class="order-box" v-for="(item,index) in orderList" :key="index">
                     <div class="order-box-top">
@@ -50,6 +52,8 @@
 <script>
 import orderHeader from '../components/OrderHeader'
 import modal from '../components/Modal'
+import loading from '../components/Loading'
+import noData from '../components/NoData'
 export default {
     name: 'order-list',
     data(){
@@ -58,12 +62,15 @@ export default {
             tip: '请谨防钓鱼链接或诈骗电话',
             orderList: [],
             toDelId: '',
-            showDelModal: false
+            showDelModal: false,
+            loading: true //判断过渡动画是否显示
         }
     },
     components: {
         orderHeader,
-        modal
+        modal,
+        loading,
+        noData
     },
     mounted(){
         this.getOrderList();
@@ -73,8 +80,9 @@ export default {
             this.axios.get('/orders').then(res=>{
                 let list = res.list;
                 this.orderList = list.filter(item => {
-                    return item.status != 0;
+                    return item.status == 10;
                 })
+                this.loading = false;
             })
         },
         goToOrderPay(no){
