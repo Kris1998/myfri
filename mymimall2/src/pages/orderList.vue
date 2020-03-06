@@ -6,7 +6,6 @@
             </template>
         </order-header>
         <div class="wrapper">
-            <loading v-show="loading"></loading>
             <no-data v-show="!loading && orderList.length == 0"></no-data>
             <div class="container">
                 <div class="order-box" v-for="(item,index) in orderList" :key="index">
@@ -39,6 +38,10 @@
                         </div>
                     </div>
                 </div>
+                <loading v-show="loading"></loading>
+                <div class="scroll-more" v-infinite-scroll="loadMore" infinite-scroll-distance="-400" infinite-scroll-disabled="busy">
+                    <!-- <img src="/images/loading-svg/loading-spinning-bubbles"> -->
+                </div>
             </div>
         </div>
         <modal title="提示" btnType="3" :showModal="showDelModal" @confirm="delOrder" @close="showDelModal = false">
@@ -54,8 +57,10 @@ import orderHeader from '../components/OrderHeader'
 import modal from '../components/Modal'
 import loading from '../components/Loading'
 import noData from '../components/NoData'
+import infiniteScroll from 'vue-infinite-scroll'
 export default {
     name: 'order-list',
+    directives: {infiniteScroll},
     data(){
         return {
             title: '订单列表',
@@ -63,7 +68,10 @@ export default {
             orderList: [],
             toDelId: '',
             showDelModal: false,
-            loading: true //判断过渡动画是否显示
+            loading: true, //判断过渡动画是否显示
+            test: 0,
+            busy: true,
+            pageNo: 1
         }
     },
     components: {
@@ -77,12 +85,22 @@ export default {
     },
     methods: {
         getOrderList(){
-            this.axios.get('/orders').then(res=>{
+            this.axios.get('/orders',{
+                params: {
+                    pageNum: this.pageNo,
+                    pageSize: 2
+                }
+            }).then(res=>{
                 let list = res.list;
-                this.orderList = list.filter(item => {
-                    return item.status == 10;
-                })
+                // this.orderList = list.filter(item => {
+                //     return item.status == 10;
+                // })
+                // this.orderList = list;
+                this.orderList = this.orderList.concat(list);
                 this.loading = false;
+                if(res.hasNextPage){
+                    this.busy = false;
+                }
             })
         },
         goToOrderPay(no){
@@ -102,6 +120,14 @@ export default {
                 this.getOrderList();
                 this.showDelModal = false;
             });
+        },
+        loadMore(){
+            this.busy = true;
+            this.loading = true;
+            setTimeout(()=>{
+                this.pageNo++;
+                this.getOrderList();
+            },500)
         }
     }
 }
